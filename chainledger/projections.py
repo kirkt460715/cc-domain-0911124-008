@@ -70,6 +70,19 @@ class Projections:
                     int(row["state"] != "released"),
                 ),
             )
+        for row in self.journal.rows(
+            "SELECT id,lot,state FROM sampling_runs ORDER BY id"
+        ):
+            self.graph.lot(row["lot"])
+            self.journal.connection.execute(
+                "INSERT INTO holds VALUES(?,?,?,?)",
+                (
+                    "sampling:" + row["id"],
+                    row["lot"],
+                    "Acceptance sampling awaiting disposition",
+                    int(row["state"] != "accepted"),
+                ),
+            )
         self.graph.conservation()
         return self.manifest()
 

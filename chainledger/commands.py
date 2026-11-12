@@ -106,6 +106,28 @@ def dispatch(app, request):
         return app.quality.disposition(**values)
     if action == "supplier_quality":
         return app.quality.supplier_summary(values["supplier"])
+    if action == "sampling_design":
+        return app.sampling.design(values["request"])
+    if action == "sampling_limits":
+        return app.sampling.limits()
+    if action == "sampling_plan":
+        return app.sampling.approve_plan(values["plan"])
+    if action == "sampling_plan_get":
+        return app.sampling.get_plan(values["id"])
+    if action == "sampling_bind":
+        return app.sampling.bind(**values)
+    if action == "sampling_run":
+        return app.sampling.get_run(values["id"])
+    if action == "sampling_inspect":
+        return app.sampling.inspect_unit(**values)
+    if action == "sampling_advance":
+        return app.sampling.advance(**values)
+    if action == "sampling_decision":
+        return app.sampling.decision(values["id"])
+    if action == "sampling_issue":
+        return app.sampling.issue(**values)
+    if action == "sampling_certificate":
+        return app.sampling.certificate(values["id"])
     if action == "packet":
         return app.packets.create(values["id"], values["shipment"])
     if action == "packet_export":
